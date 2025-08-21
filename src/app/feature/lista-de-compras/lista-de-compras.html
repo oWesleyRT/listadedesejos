@@ -1,0 +1,86 @@
+<div fxLayout="row" fxLayoutAlign="center">
+  <div fxLayout="column" fxFlex="80%">
+    <form
+      class="mt-4"
+      #itemFrm="ngForm"
+      fxLayout="column"
+      fxLayoutAlign="center"
+      (ngSubmit)="addItem(itemFrm)"
+    >
+      <mat-card fxFlex="column" class="gap-4">
+        <mat-card-header fxFlex="row" fxLayoutAlign="center">
+          <mat-card-title>Lista de Compras</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="mt-20">
+          <div fxLayout="row" fxLayoutAlign="start">
+            <mat-form-field class="w-100">
+              <mat-label>Item</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Descrição do item"
+                name="item"
+                [(ngModel)]="form.item"
+                required
+              />
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start">
+            <mat-form-field class="w-100">
+              <mat-label>Quantidade</mat-label>
+              <input
+                matInput
+                type="number"
+                placeholder="Quantidade"
+                name="quantity"
+                [(ngModel)]="form.quantity"
+                min="1"
+                required
+              />
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="center">
+            <button mat-stroked-button color="primary" type="submit" [disabled]="itemFrm.invalid">
+              Adicionar Item
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card fxFlex="column" class="gap-4 mt-4 w-100">
+        <mat-card-header fxFlex="row" fxLayoutAlign="center">
+          <mat-card-title>Itens adicionados</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="mt-20">
+          <div *ngIf="items.length === 0" class="text-center">Nenhum item adicionado.</div>
+
+          <table *ngIf="items.length > 0" mat-table [dataSource]="items" class="mat-elevation-z8">
+            <ng-container matColumnDef="item">
+              <th mat-header-cell *matHeaderCellDef>Item</th>
+              <td mat-cell *matCellDef="let element">{{ element.item }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="quantity">
+              <th mat-header-cell *matHeaderCellDef>Quantidade</th>
+              <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Ações</th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-button color="warn" (click)="removeItem(element)">Remover</button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </form>
+  </div>
+</div>

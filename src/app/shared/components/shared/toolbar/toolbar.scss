@@ -1,0 +1,11 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.logo {
+  width: 90px;
+  height: 50px;
+  object-fit: cover; // mantém proporção e corta o excesso
+  object-position: center; // corta centralizado
+  border-radius: 8px; // opcional: bordas arredondadas
+}
